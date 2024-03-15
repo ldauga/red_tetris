@@ -1,0 +1,28 @@
+{
+  "name": "red-tetris",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm -w packages/client run dev",
+    "build": "npm -w packages run build",
+    "start": "npm -w packages/server run start",
+    "build:start": "npm run build && npm run start",
+    "test:server": "npm -w packages/server run test",
+    "coverage": "npm -w packages/server run test:cov; npm -w packages/client run test:cov"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "@babel/preset-typescript": "^7.23.3",
+    "concurrently": "^8.2.2",
+    "socket.io": "^4.7.4"
+  }
+}
