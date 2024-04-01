@@ -116,10 +116,8 @@ class Room {
     }
 
     public update() {
-
         if (this._games.length > 1 && this._games.filter(game => !game.is_finish).length == 1) {
             this._games.filter(game => !game.is_finish)[0].player.socket.emit('victory')
-
         }
 
 
