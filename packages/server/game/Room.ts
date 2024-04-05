@@ -94,12 +94,16 @@ class Room {
     //////////         OTHER          //////////
     ////////////////////////////////////////////
 
-    public start() {
+    public start(other_list = false) {
         this._is_running = true
 
         for (let index = 0; index < this._games.length; index++) {
             const element = this._games[index];
             element.player.socket.emit('started')
+
+            if (other_list)
+                this._piece_list.reset()
+            
             element.start(this._piece_list.get(0), this._piece_list.get(1))
         }
     }

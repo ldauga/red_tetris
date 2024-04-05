@@ -61,16 +61,11 @@ function Home() {
       case " ":
         dispatch({ type: SocketActionTypes.EMIT, event: "drop", data: {} });
         break;
-      case "-":
-        dispatch({ type: SocketActionTypes.EMIT, event: "remove_line", data: {} });
-        break;
     }
   }
 
   useEffect(() => {
-    // if (isWinner || isGameOver) {
     document.addEventListener("keydown", handleKeyDown);
-    // }
   }, []);
 
   useEffect(() => {
@@ -101,7 +96,6 @@ function Home() {
 
   dispatch({ type: SocketActionTypes.ON, event: 'update', callback: ({ grid, next_piece, next_piece_tag, preview_other_players, score }: any) => { setGrid(grid); setNextPiece(next_piece); setNextPieceTag(next_piece_tag); setPreviewOtherPlayers(preview_other_players); setScore(score) } })
 
-
   dispatch({ type: SocketActionTypes.ON, event: 'error', callback: ({ msg }: any) => { alert(msg); navigate('/') } })
 
 
@@ -116,6 +110,10 @@ function Home() {
 
   const onStartGame = () => {
     dispatch({ type: SocketActionTypes.EMIT, event: 'start' })
+  }
+
+  const onStartGameWithOtherList = () => {
+    dispatch({ type: SocketActionTypes.EMIT, event: 'startOtherList' })
   }
 
 
@@ -145,11 +143,15 @@ function Home() {
         </div>
       }
 
-{isOwner && !isStarted &&
-        <div className="container">
-          <button onClick={onStartGame}>{isGameOver || isVictory ? 'Restart the game' : 'Start the game'}</button>
-        </div>
-      }
+      <div className="flex">
+        {isOwner && !isStarted &&
+          <button onClick={onStartGame}>{isGameOver || isVictory ? 'Restart' : 'Start'}  the game with the same list of piece</button>
+        }
+
+        {isOwner && !isStarted && (isVictory || isGameOver) &&
+          <button onClick={onStartGameWithOtherList}>Restart the game with another list of piece</button>
+        }
+      </div>
 
       {isStarted && !isGameOver && !isVictory &&
         grid.length >= 1 &&
@@ -180,7 +182,7 @@ function Home() {
           </div>
 
           <div className="preview">
-          {previewOtherPlayers.map(({ grid, name, next_piece, next_piece_tag }) => (
+            {previewOtherPlayers.map(({ grid, name, next_piece, next_piece_tag }) => (
               <div className="previewgrid">
                 <div className="flex">
                   <div className="nextgrid">
@@ -196,7 +198,7 @@ function Home() {
                     <div className="next_piece">
                       <div className="nextgrid">
                         {next_piece.map((row: []) => (
-                        <div className="nextrow">
+                          <div className="nextrow">
                             {row.map((cell) => (
                               <div className={`minicell ${cell == 1 ? next_piece_tag : '0'}`}></div>
                             ))}

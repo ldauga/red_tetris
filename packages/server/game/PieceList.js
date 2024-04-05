@@ -20,5 +20,15 @@ class PieceList {
         }
         return this._list[number].clone();
     }
+    reset() {
+        for (let index = 0; index < this._list.length; index++) {
+            delete this._list[index];
+        }
+        this._list.splice(0, this._list.length);
+        for (let index = 0; index < 50; index++) {
+            const piece = new Piece_1.default(Math.floor(Math.random() * 100) % 7, new Position_1.default(4, 0));
+            this._list.push(piece);
+        }
+    }
 }
 exports.default = PieceList;

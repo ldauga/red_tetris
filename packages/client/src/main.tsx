@@ -1,6 +1,4 @@
 import ReactDOM from "react-dom/client";
-
-// import NotFound from "./views/notFound/404.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { store } from "./store";
 import { Provider } from "react-redux";
@@ -16,8 +14,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
-          {/* <Route path="*" element={<NotFound />}> */}
-          {/* </Route> */}
         </Routes>
       </BrowserRouter>
     </Provider>

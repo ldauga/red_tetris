@@ -82,47 +82,63 @@ io.on('connection', (socket) => {
             room_list[room_index].start();
         }
     });
+    socket.on('startOtherList', () => {
+        console.log('event startOtherList recive'.gray);
+        const user = getCurrentUser(socket);
+        const room_index = getCurrentRoomIndex(socket);
+        if (room_list[room_index].main_player.name === user.username) {
+            room_list[room_index].start(true);
+        }
+    });
     socket.on('moveDown', () => {
         console.log('event moveDown recive'.gray);
         const user = getCurrentUser(socket);
         const room_index = getCurrentRoomIndex(socket);
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username).moveDown();
+        if (room_list[room_index].is_running) {
+            const game = room_list[room_index].getUserGame(user.username);
+            if (game && !game.is_finish)
+                game.moveDown();
+        }
     });
     socket.on('moveRight', () => {
         console.log('event moveRight recive'.gray);
         const user = getCurrentUser(socket);
         const room_index = getCurrentRoomIndex(socket);
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username).moveRight();
+        if (room_list[room_index].is_running) {
+            const game = room_list[room_index].getUserGame(user.username);
+            if (game && !game.is_finish)
+                game.moveRight();
+        }
     });
     socket.on('moveLeft', () => {
         console.log('event moveLeft recive'.gray);
         const user = getCurrentUser(socket);
         const room_index = getCurrentRoomIndex(socket);
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username).moveLeft();
+        if (room_list[room_index].is_running) {
+            const game = room_list[room_index].getUserGame(user.username);
+            if (game && !game.is_finish)
+                game.moveLeft();
+        }
     });
     socket.on('drop', () => {
         console.log('event drop recive'.gray);
         const user = getCurrentUser(socket);
         const room_index = getCurrentRoomIndex(socket);
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username).drop();
+        if (room_list[room_index].is_running) {
+            const game = room_list[room_index].getUserGame(user.username);
+            if (game && !game.is_finish)
+                game.drop();
+        }
     });
     socket.on('rotate', () => {
         console.log('event rotate recive'.gray);
         const user = getCurrentUser(socket);
         const room_index = getCurrentRoomIndex(socket);
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username).rotate();
-    });
-    socket.on('remove_line', () => {
-        console.log('event rotate recive'.gray);
-        const user = getCurrentUser(socket);
-        const room_index = getCurrentRoomIndex(socket);
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username).remove_line();
+        if (room_list[room_index].is_running) {
+            const game = room_list[room_index].getUserGame(user.username);
+            if (game && !game.is_finish)
+                game.rotate();
+        }
     });
     socket.on('disconnect', () => {
         if (connected_socket.findIndex((s) => s.socket_id == socket.id) >= 0) {

@@ -23,6 +23,8 @@
     "@babel/preset-env": "^7.24.0",
     "@babel/preset-typescript": "^7.23.3",
     "concurrently": "^8.2.2",
-    "socket.io": "^4.7.4"
+    "formik": "^2.4.5",
+    "socket.io": "^4.7.4",
+    "yup": "^1.4.0"
   }
 }

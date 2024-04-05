@@ -40,7 +40,7 @@ button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
-  font-size: 1em;
+  font-size: 30px;
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
@@ -74,6 +74,10 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
 }
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+}
 
 .main_message {
   width: fit-content;
@@ -92,13 +96,13 @@ button:focus-visible {
   /* aspect-ratio: 3/5; */
   display: flex;
   flex-direction: column;
-  border: 2px solid white;
+  border: 2px solid #ff4ca8;
 }
 
 .nextgrid {
   display: flex;
   flex-direction: column;
-  border: 2px solid white;
+  border: 2px solid #ff4ca8;
   height: fit-content;
 }
 
@@ -195,6 +199,8 @@ button:focus-visible {
 
 .flex {
   display: flex;
+  justify-content: center;
+  width: 100vw;
 }
 
 .name {
@@ -220,4 +226,14 @@ button:focus-visible {
 .previewgrid {
   width: fit-content;
   height: fit-content;
+}
+
+.flex {
+  display: flex;
+  gap: 1rem;
+}
+
+.blob {
+  position: absolute;
+  z-index: -9999999;
 }

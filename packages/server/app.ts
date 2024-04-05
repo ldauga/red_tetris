@@ -82,7 +82,7 @@ io.on('connection', (socket) => {
             if (room_list[room_list.findIndex(r => r.name === room)].isUserInHere(username)) {
 
                 error = 'Username already taken'
-                socket.emit('error', { msg:  error})
+                socket.emit('error', { msg: error })
             }
             else
                 room_list[room_list.findIndex(r => r.name === room)].addPlayer(new Player(username, socket))
@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
         console.table({ socket_id: socket.id, room: room, username: username })
         console.log('================================================='.green)
         connected_socket.push({ socket_id: socket.id, room: room, username: username })
-        
+
         console.log('================================================='.yellow)
         console.log('                      Room List'.yellow)
         console.table(room_list.map(room => ({ name: room.name, main_player: room.main_player.name, game_length: room.length_game, })))
@@ -118,55 +118,76 @@ io.on('connection', (socket) => {
             room_list[room_index].start()
         }
     })
+    socket.on('startOtherList', () => {
+        console.log('event startOtherList recive'.gray);
+        const user = getCurrentUser(socket);
+        const room_index = getCurrentRoomIndex(socket);
+        if (room_list[room_index].main_player.name === user.username) {
+            room_list[room_index].start(true);
+        }
+    });
 
     socket.on('moveDown', () => {
         console.log('event moveDown recive'.gray)
         const user = getCurrentUser(socket)
         const room_index = getCurrentRoomIndex(socket)
 
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username)!.moveDown()
+        if (room_list[room_index].is_running) {
+            const game = room_list[room_index].getUserGame(user.username)
+            if (game && !game.is_finish)
+                game.moveDown()
+
+        }
     })
     socket.on('moveRight', () => {
         console.log('event moveRight recive'.gray)
         const user = getCurrentUser(socket)
         const room_index = getCurrentRoomIndex(socket)
 
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username)!.moveRight()
+        if (room_list[room_index].is_running) {
+            const game = room_list[room_index].getUserGame(user.username)
+            if (game && !game.is_finish)
+                game.moveRight()
+
+        }
     })
     socket.on('moveLeft', () => {
         console.log('event moveLeft recive'.gray)
         const user = getCurrentUser(socket)
         const room_index = getCurrentRoomIndex(socket)
 
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username)!.moveLeft()
+        if (room_list[room_index].is_running) {
+            const game = room_list[room_index].getUserGame(user.username)
+            if (game && !game.is_finish)
+                game.moveLeft()
+
+        }
     })
     socket.on('drop', () => {
         console.log('event drop recive'.gray)
         const user = getCurrentUser(socket)
         const room_index = getCurrentRoomIndex(socket)
 
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username)!.drop()
+        if (room_list[room_index].is_running) {
+            const game = room_list[room_index].getUserGame(user.username)
+            if (game && !game.is_finish)
+                game.drop()
+
+        }
     })
     socket.on('rotate', () => {
         console.log('event rotate recive'.gray)
         const user = getCurrentUser(socket)
         const room_index = getCurrentRoomIndex(socket)
 
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username)!.rotate()
-    })
-    socket.on('remove_line', () => {
-        console.log('event rotate recive'.gray)
-        const user = getCurrentUser(socket)
-        const room_index = getCurrentRoomIndex(socket)
+        if (room_list[room_index].is_running) {
+            const game = room_list[room_index].getUserGame(user.username)
+            if (game && !game.is_finish)
+                game.rotate()
 
-        if (room_list[room_index].is_running)
-            room_list[room_index].getUserGame(user.username)!.remove_line()
+        }
     })
+
 
 
 
