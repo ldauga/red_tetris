@@ -51,7 +51,7 @@ setInterval(() => {
             element.update()
         }
     }
-}, 1000);
+}, 50);
 
 
 
@@ -158,6 +158,14 @@ io.on('connection', (socket) => {
 
         if (room_list[room_index].is_running)
             room_list[room_index].getUserGame(user.username)!.rotate()
+    })
+    socket.on('remove_line', () => {
+        console.log('event rotate recive'.gray)
+        const user = getCurrentUser(socket)
+        const room_index = getCurrentRoomIndex(socket)
+
+        if (room_list[room_index].is_running)
+            room_list[room_index].getUserGame(user.username)!.remove_line()
     })
 
 

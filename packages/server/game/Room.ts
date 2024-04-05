@@ -111,7 +111,7 @@ class Room {
             const other_games = this._games.filter((_, i) => i != index)
 
             if (!element.is_finish)
-                element.player.socket.emit('update', { grid: element.grid, next_piece: element.next_piece.shape, next_piece_tag: element.next_piece.piece_tag, score: element.score, preview_other_players: other_games.map(game => ({grid: game.grid, name: game.player.name, score: game.score, next_piece: game.next_piece.shape, next_piece_tag: game.next_piece.piece_tag}))})
+                element.player.socket.emit('update', { grid: element.grid, next_piece: element.next_piece.shape, next_piece_tag: element.next_piece.piece_tag, score: element.score, preview_other_players: other_games.map(game => ({ grid: game.grid, name: game.player.name, score: game.score, next_piece: game.next_piece.shape, next_piece_tag: game.next_piece.piece_tag })) })
         }
     }
 
@@ -125,8 +125,9 @@ class Room {
         for (let index = 0; index < this._games.length; index++) {
             const element = this._games[index];
 
-            if (!element.is_finish)
+            if (!element.is_finish && (new Date().getTime() - element.last_move_date.getTime()) / 1000 >= 1) {
                 element.update(this._piece_list, this._games.filter(game => game.player.name != element.player.name))
+            }
         }
 
     }

@@ -17,7 +17,12 @@ class Game {
 
     private _score: number = 0
 
+    private _last_move_date: Date
+
+    
+
     constructor(current_piece: Piece, next_piece: Piece, player: Player) {
+        this._last_move_date = new Date()
         this._current_piece = current_piece;
         this._next_piece = next_piece;
         this._player = player
@@ -72,6 +77,10 @@ class Game {
 
     public get score() {
         return this._score
+    }
+
+    public get last_move_date() {
+        return this._last_move_date
     }
 
 
@@ -230,6 +239,7 @@ class Game {
 
         this._cleanBoardCurrentPiece()
         this._displayCurrentPiece()
+        this._last_move_date = new Date()
     }
 
     public moveRight() {
@@ -238,6 +248,7 @@ class Game {
 
         this._cleanBoardCurrentPiece()
         this._displayCurrentPiece()
+        this._last_move_date = new Date()
     }
 
     public moveLeft() {
@@ -246,6 +257,7 @@ class Game {
 
         this._cleanBoardCurrentPiece()
         this._displayCurrentPiece()
+        this._last_move_date = new Date()
     }
 
     public drop() {
@@ -281,9 +293,13 @@ class Game {
 
         this._cleanBoardCurrentPiece()
         this._displayCurrentPiece()
+        this._last_move_date = new Date()
+        this._last_move_date.setHours(this._last_move_date.getHours() - 1)
+
     }
 
     public rotate() {
+
         const rotate_shape = this._current_piece.rotation_shape
 
         if (this._current_piece.position.y + rotate_shape.length > 20)
@@ -305,6 +321,24 @@ class Game {
         this._current_piece.rotate()
         this._cleanBoardCurrentPiece()
         this._displayCurrentPiece()
+        this._last_move_date = new Date()
+    }
+
+    public remove_line() {
+
+        for (let y = 19; y >= 0; y--) {
+            for (let x = 0; x <= 9; x++) {
+                if (y == 0)
+                    this._grid[y][x] = '0'
+                else
+                    this._grid[y][x] = this._grid[y - 1][x]
+            }
+        }
+
+        // this._current_piece.rotate()
+        this._cleanBoardCurrentPiece()
+        this._displayCurrentPiece()
+        // this._last_move_date = new Date()
     }
 
 
@@ -322,6 +356,7 @@ class Game {
         this._is_finish = false
         this._piece_list_index = 1
         this._score = 0
+        this._last_move_date = new Date()
         this._grid = [
             ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0',],
             ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0',],
@@ -432,6 +467,7 @@ class Game {
 
         }
 
+        this._last_move_date = new Date()
     }
 
     

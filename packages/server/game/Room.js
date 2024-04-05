@@ -83,8 +83,9 @@ class Room {
         }
         for (let index = 0; index < this._games.length; index++) {
             const element = this._games[index];
-            if (!element.is_finish)
+            if (!element.is_finish && (new Date().getTime() - element.last_move_date.getTime()) / 1000 >= 1) {
                 element.update(this._piece_list, this._games.filter(game => game.player.name != element.player.name));
+            }
         }
     }
 }

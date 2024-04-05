@@ -5,6 +5,7 @@ class Game {
         this._piece_list_index = 1;
         this._is_finish = false;
         this._score = 0;
+        this._last_move_date = new Date();
         this._current_piece = current_piece;
         this._next_piece = next_piece;
         this._player = player;
@@ -48,6 +49,9 @@ class Game {
     }
     get score() {
         return this._score;
+    }
+    get last_move_date() {
+        return this._last_move_date;
     }
     ////////////////////////////////////////////
     /////////        PRIVATES       ////////////
@@ -174,18 +178,21 @@ class Game {
             this._current_piece.position.y++;
         this._cleanBoardCurrentPiece();
         this._displayCurrentPiece();
+        this._last_move_date = new Date();
     }
     moveRight() {
         if (!this._isCurrentTouchRight())
             this._current_piece.position.x++;
         this._cleanBoardCurrentPiece();
         this._displayCurrentPiece();
+        this._last_move_date = new Date();
     }
     moveLeft() {
         if (!this._isCurrentTouchLeft())
             this._current_piece.position.x--;
         this._cleanBoardCurrentPiece();
         this._displayCurrentPiece();
+        this._last_move_date = new Date();
     }
     drop() {
         if (this._isCurrentTouch())
@@ -215,6 +222,8 @@ class Game {
         this._current_piece.position.y = uppest_y;
         this._cleanBoardCurrentPiece();
         this._displayCurrentPiece();
+        this._last_move_date = new Date();
+        this._last_move_date.setHours(this._last_move_date.getHours() - 1);
     }
     rotate() {
         const rotate_shape = this._current_piece.rotation_shape;
@@ -235,6 +244,21 @@ class Game {
         this._current_piece.rotate();
         this._cleanBoardCurrentPiece();
         this._displayCurrentPiece();
+        this._last_move_date = new Date();
+    }
+    remove_line() {
+        for (let y = 19; y >= 0; y--) {
+            for (let x = 0; x <= 9; x++) {
+                if (y == 0)
+                    this._grid[y][x] = '0';
+                else
+                    this._grid[y][x] = this._grid[y - 1][x];
+            }
+        }
+        // this._current_piece.rotate()
+        this._cleanBoardCurrentPiece();
+        this._displayCurrentPiece();
+        // this._last_move_date = new Date()
     }
     ////////////////////////////////////////////
     /////////         OTHER         ////////////
@@ -245,6 +269,7 @@ class Game {
         this._is_finish = false;
         this._piece_list_index = 1;
         this._score = 0;
+        this._last_move_date = new Date();
         this._grid = [
             ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0',],
             ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0',],
@@ -337,6 +362,7 @@ class Game {
             this._next_piece = piece_list.get(this._piece_list_index);
             this._displayCurrentPiece();
         }
+        this._last_move_date = new Date();
     }
 }
 exports.default = Game;
