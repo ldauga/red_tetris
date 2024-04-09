@@ -110,7 +110,6 @@ class Game {
             for (let piece_x = 0; piece_x < this._current_piece.shape[piece_y].length; piece_x++) {
                 if (this._current_piece.shape[piece_y][piece_x] == 1) {
                     if (this._grid[grid_y][grid_x] != '0' && this._grid[grid_y][grid_x] != 's') {
-                        console.log(this._grid[grid_y][grid_x]);
                         this._player.socket.emit('game_over');
                         this._is_finish = true;
                     }

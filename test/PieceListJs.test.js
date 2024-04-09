@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import PieceList from "../packages/server/game/PieceList.ts";
+import PieceList from "../packages/server/game/PieceList";
 
 
 describe('PieceList', () => {

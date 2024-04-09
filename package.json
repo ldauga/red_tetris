@@ -7,7 +7,8 @@
     "start": "npm -w packages/server run start",
     "build:start": "npm run build && npm run start",
     "test:server": "npm -w packages/server run test",
-    "coverage": "npm -w packages/server run test:cov; npm -w packages/client run test:cov"
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "workspaces": [
     "packages/*"
@@ -24,7 +25,14 @@
     "@babel/preset-typescript": "^7.23.3",
     "concurrently": "^8.2.2",
     "formik": "^2.4.5",
+    "jsdom": "^24.0.0",
     "socket.io": "^4.7.4",
     "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.2",
+    "@vitest/coverage-istanbul": "^1.4.0",
+    "vitest": "^1.4.0"
   }
 }

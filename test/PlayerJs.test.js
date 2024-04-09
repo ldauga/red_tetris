@@ -1,5 +1,5 @@
 import { expect, test, describe, vi } from "vitest";
-import Player from "../packages/server/game/Player.ts";
+import Player from "../packages/server/game/Player";
 
 describe("Player", () => {
   test("Création d'un joueur avec un socket client", () => {
