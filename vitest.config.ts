@@ -6,6 +6,6 @@ export default defineConfig({
       provider: "istanbul", // or 'v8'
     },
     environment: 'jsdom',
-    globals: true
+    globals: true,
   },
 });

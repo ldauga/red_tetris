@@ -4,15 +4,11 @@
 import express from 'express'
 import { Server, Socket } from 'socket.io';
 import http from 'http'
-
 import colors from 'colors'
 colors.enable()
-
 import { fileURLToPath } from 'url';
 import path from 'path'
-
 import cron from 'node-cron'
-
 import Room from './game/Room'
 import Player from './game/Player';
 
@@ -104,6 +100,7 @@ io.on('connection', (socket) => {
         console.log('                      Room List'.yellow)
         console.table(room_list.map(room => ({ name: room.name, main_player: room.main_player.name, game_length: room.length_game, })))
         console.log('================================================='.yellow)
+        socket.emit('user Connected')
     }
 
 
@@ -113,7 +110,6 @@ io.on('connection', (socket) => {
         console.log('event start recive'.gray)
         const user = getCurrentUser(socket)
         const room_index = getCurrentRoomIndex(socket)
-
         if (room_list[room_index].main_player.name === user.username) {
             room_list[room_index].start()
         }
@@ -136,7 +132,7 @@ io.on('connection', (socket) => {
             const game = room_list[room_index].getUserGame(user.username)
             if (game && !game.is_finish)
                 game.moveDown()
-
+            
         }
     })
     socket.on('moveRight', () => {
@@ -234,3 +230,5 @@ app.use(express.static(path.join(process.env.PWD as string, '../client/dist')));
 app.get('*', (req: any, res: any) => {
     res.sendFile(path.join(process.env.PWD as string, '../client/dist/index.html'));
 });
+
+export default app

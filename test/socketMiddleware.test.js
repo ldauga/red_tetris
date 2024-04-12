@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { socketMiddleware, SocketActionTypes } from '../packages/client/src/middleware/socketMiddleware'
-import { io } from 'socket.io-client';
+import { store } from '../packages/client/src/store/store'
 
 describe("Middleware", () => {
     test("Types", () => {
@@ -102,6 +102,11 @@ describe("Middleware", () => {
         type: SocketActionTypes.DISCONNECT,
         data: { username: 'testUser', room: 'testRoom' }
         };
+
+        const actionConnect = {
+          type: SocketActionTypes.CONNECT,
+          data: { username: 'testUser', room: 'testRoom' }
+          };
 
         test("Disconnect with socket", () => {
           socketMiddleware(mockStore)(mockNext)(action);
