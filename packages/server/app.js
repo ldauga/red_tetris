@@ -1,5 +1,4 @@
 "use strict";
-// Import required modules
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -168,3 +167,4 @@ app.use(express_1.default.static(path_1.default.join(process.env.PWD, '../client
 app.get('*', (req, res) => {
     res.sendFile(path_1.default.join(process.env.PWD, '../client/dist/index.html'));
 });
+exports.default = app;

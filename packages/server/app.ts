@@ -1,6 +1,3 @@
-// Import required modules
-
-
 import express from 'express'
 import { Server, Socket } from 'socket.io';
 import http from 'http'
@@ -65,7 +62,7 @@ const getCurrentRoomIndex = (socket: Socket) => {
     return room_list.findIndex(room => room.name == user.room && room.isUserInHere(user.username))
 }
 
-io.on('connection', (socket) => {
+io.on('connection', (socket: Socket) => {
     const { room, username } = socket.handshake.query
 
     if (typeof (room) != 'string' || typeof (username) != 'string')
@@ -104,6 +101,7 @@ io.on('connection', (socket) => {
         console.log('                      Room List'.yellow)
         console.table(room_list.map(room => ({ name: room.name, main_player: room.main_player.name, game_length: room.length_game, })))
         console.log('================================================='.yellow)
+        socket.emit('user Connected')
     }
 
 
@@ -234,3 +232,5 @@ app.use(express.static(path.join(process.env.PWD as string, '../client/dist')));
 app.get('*', (req: any, res: any) => {
     res.sendFile(path.join(process.env.PWD as string, '../client/dist/index.html'));
 });
+
+export default app

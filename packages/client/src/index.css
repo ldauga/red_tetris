@@ -232,8 +232,3 @@ button:focus-visible {
   display: flex;
   gap: 1rem;
 }
-
-.blob {
-  position: absolute;
-  z-index: -9999999;
-}
